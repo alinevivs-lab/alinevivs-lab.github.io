@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Batuca · Panorama do dia</title>
+  <meta name="description" content="Índices, fundos, câmbio, juros e as notícias que movem o mercado.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Cabeçalho -->
+<header class="topbar" id="topo">
+  <div class="wrap topbar__in">
+    <a href="#topo" class="logo" aria-label="Batuca, início">Batuca</a>
+    <nav class="topbar__nav">
+      <a href="#newsletter" data-i18n="nav.newsletter">Newsletter</a>
+      <span class="lang">
+        <button type="button" class="lang__btn is-on" data-lang="pt">PT</button>
+        <span class="lang__sep">|</span>
+        <button type="button" class="lang__btn" data-lang="en">EN</button>
+      </span>
+      <button type="button" class="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <div class="wrap">
+    <a href="#indices" data-i18n="sec.indices">Índices</a>
+    <a href="#cambio" data-i18n="sec.cambio">Câmbio</a>
+    <a href="#fundos" data-i18n="sec.fundos">Rentabilidade dos fundos</a>
+    <a href="#juros" data-i18n="sec.juros">Taxas de juros</a>
+    <a href="#noticias" data-i18n="sec.noticias">Notícias do dia</a>
+    <a href="#newsletter" data-i18n="nav.newsletter">Newsletter</a>
+  </div>
+</div>
+
+<!-- Destaque -->
+<section class="hero">
+  <svg class="hero__art" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true" id="heroArt"></svg>
+  <div class="wrap hero__in">
+    <p class="hero__date" id="heroDate">Sábado, 31 de outubro de 2026</p>
+    <h1 class="hero__title" data-i18n="hero.title">Panorama do dia</h1>
+    <p class="hero__lead" data-i18n="hero.lead">Índices, fundos, câmbio, juros e as notícias que movem o mercado.</p>
+    <p class="hero__credit">Foto de arquitetura, tons frios</p>
+    <a href="#indices" class="hero__scroll" aria-label="Rolar para os índices"></a>
+  </div>
+  <div class="ticker" aria-label="Cotações">
+    <div class="ticker__track" id="ticker"></div>
+  </div>
+</section>
+
+<main>
+
+  <!-- Índices -->
+  <section class="sec sec--steel" id="indices">
+    <div class="wrap">
+      <div class="sec__head">
+        <h2 data-i18n="sec.indices">Índices</h2>
+        <p data-i18n="desc.indices">Bolsa brasileira e americana. Selecione um índice para ver a evolução no período.</p>
+      </div>
+      <div class="idx-cards" id="idxCards" role="tablist"></div>
+      <div class="chart-head">
+        <div><strong id="idxName">Ibovespa</strong> <span class="muted" id="idxVar"></span></div>
+        <div class="seg seg--text" id="idxRange">
+          <button type="button" data-r="1M">1M</button>
+          <button type="button" data-r="6M">6M</button>
+          <button type="button" data-r="12M" class="is-on">12M</button>
+        </div>
+      </div>
+      <div class="chart chart--dark" id="idxChart"></div>
+    </div>
+  </section>
+
+  <!-- Câmbio -->
+  <section class="sec sec--navy" id="cambio">
+    <div class="wrap">
+      <div class="sec__head">
+        <h2 data-i18n="sec.cambio">Câmbio</h2>
+        <p data-i18n="desc.cambio">Cotação das principais moedas contra o real, com a variação do dia e dos últimos 30 dias.</p>
+      </div>
+      <div class="fx-grid" id="fxGrid"></div>
+    </div>
+  </section>
+
+  <!-- Fundos -->
+  <section class="sec sec--light" id="fundos">
+    <div class="wrap">
+      <div class="sec__head">
+        <h2 data-i18n="sec.fundos">Rentabilidade dos fundos</h2>
+        <p data-i18n="desc.fundos">Retornos líquidos de taxas, até o último dia útil. Selecione um fundo para compará-lo ao seu benchmark.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="tbl tbl--funds">
+          <thead>
+            <tr>
+              <th data-i18n="th.fundo">Fundo</th>
+              <th data-i18n="th.classe">Classe</th>
+              <th class="num" data-i18n="th.mes">Mês</th>
+              <th class="num" data-i18n="th.ano">Ano</th>
+              <th class="num" data-i18n="th.12m">12 meses</th>
+              <th class="num" data-i18n="th.24m">24 meses</th>
+              <th class="num" data-i18n="th.pl">Patrimônio</th>
+            </tr>
+          </thead>
+          <tbody id="fundRows"></tbody>
+        </table>
+      </div>
+
+      <div class="fund-detail">
+        <h3 id="fundName">Batuca Ações FIC FIA</h3>
+        <p class="muted small" id="fundMeta">Ações · benchmark Ibovespa</p>
+        <div class="kpis">
+          <div class="kpi"><span class="kpi__v" id="fundK1">+22,4%</span><span class="kpi__l" data-i18n="kpi.fundo">Fundo, 12 meses</span></div>
+          <div class="kpi"><span class="kpi__v" id="fundK2">+17,9%</span><span class="kpi__l" data-i18n="kpi.ibov">Ibovespa, 12 meses</span></div>
+        </div>
+        <div class="legend">
+          <span><i class="lg lg--navy"></i><span data-i18n="lg.fundo">Fundo</span></span>
+          <span><i class="lg lg--steel"></i>Ibovespa</span>
+        </div>
+        <div class="chart chart--light" id="fundChart"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Juros -->
+  <section class="sec sec--steel" id="juros">
+    <div class="wrap">
+      <div class="sec__head">
+        <h2 data-i18n="sec.juros">Taxas de juros</h2>
+        <p data-i18n="desc.juros">Taxa básica de cada banco central, inflação acumulada em 12 meses e o juro real resultante.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="tbl tbl--rates">
+          <thead>
+            <tr>
+              <th data-i18n="th.pais">País</th>
+              <th data-i18n="th.taxa">Taxa</th>
+              <th class="num" data-i18n="th.inflacao">Inflação 12m</th>
+              <th class="num" data-i18n="th.real">Juro real</th>
+              <th class="num" data-i18n="th.decisao">Última decisão</th>
+            </tr>
+          </thead>
+          <tbody id="rateRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notícias -->
+  <section class="sec sec--light" id="noticias">
+    <div class="wrap">
+      <div class="sec__head">
+        <h2 data-i18n="sec.noticias">Notícias do dia</h2>
+        <p data-i18n="desc.noticias">31 de outubro. Seleção da equipe de análise, atualizada ao longo do dia.</p>
+      </div>
+      <div class="tabs" id="newsTabs" role="tablist"></div>
+      <div class="news-grid" id="newsGrid"></div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="sec sec--navy" id="newsletter">
+    <div class="wrap nl">
+      <div>
+        <h2 data-i18n="nav.newsletter">Newsletter</h2>
+        <p class="nl__lead" data-i18n="desc.newsletter">O fechamento dos mercados e a leitura da equipe de gestão, direto no seu e-mail.</p>
+      </div>
+      <form class="nl__form" id="nlForm" novalidate>
+        <label class="field">
+          <span class="field__l">E-mail</span>
+          <input type="email" name="email" placeholder="nome@empresa.com.br" autocomplete="email" required>
+        </label>
+        <div class="field">
+          <span class="field__l" data-i18n="nl.freq">Frequência</span>
+          <div class="seg seg--box" id="nlFreq">
+            <button type="button" class="is-on" data-v="diaria" data-i18n="nl.diaria">Diária</button>
+            <button type="button" data-v="semanal" data-i18n="nl.semanal">Semanal</button>
+          </div>
+        </div>
+        <button type="submit" class="btn-outline" data-i18n="nl.assinar">Assinar</button>
+        <p class="nl__msg" id="nlMsg" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- Rodapé -->
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <h4 data-i18n="ft.mercados">Mercados</h4>
+      <a href="#indices" data-i18n="sec.indices">Índices</a>
+      <a href="#cambio" data-i18n="sec.cambio">Câmbio</a>
+      <a href="#juros" data-i18n="sec.juros">Taxas de juros</a>
+    </div>
+    <div>
+      <h4>Batuca</h4>
+      <a href="#fundos" data-i18n="ft.fundos">Fundos</a>
+      <a href="#" data-i18n="ft.gestoras">Gestoras</a>
+      <a href="#" data-i18n="ft.contato">Contato</a>
+    </div>
+    <div>
+      <h4>News</h4>
+      <a href="#noticias" data-i18n="sec.noticias">Notícias do dia</a>
+      <a href="#newsletter" data-i18n="nav.newsletter">Newsletter</a>
+    </div>
+    <div>
+      <h4>Social</h4>
+      <a href="#">LinkedIn</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+  <p class="wrap foot__city">São Paulo · Rio de Janeiro</p>
+  <div class="disclaimer">
+    <p class="wrap" data-i18n="disclaimer">As informações contidas neste site têm caráter meramente informativo e não constituem oferta de compra ou venda de cotas de fundos ou de quaisquer valores mobiliários. Rentabilidade obtida no passado não representa garantia de rentabilidade futura. A rentabilidade divulgada não é líquida de impostos. Fundos de investimento não contam com garantia do administrador, do gestor, de qualquer mecanismo de seguro ou do Fundo Garantidor de Créditos – FGC. Leia o regulamento e a lâmina antes de investir. Dados de mercado, fundos e notícias exibidos nesta página são ilustrativos.</p>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
